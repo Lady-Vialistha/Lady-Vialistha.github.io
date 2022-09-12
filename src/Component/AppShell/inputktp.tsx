@@ -1,13 +1,12 @@
-import { TextInput, Checkbox, Button, Group, Box, Notification } from '@mantine/core';
+import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
-import React, {Dispatch, SetStateAction} from 'react'
+import React from 'react'
 interface ChildProps {
     data: any,
-    setData: React.Dispatch<React.SetStateAction<number>>;
-  }
+    setData: React.Dispatch<React.SetStateAction<any>>;
+}
 const InputKTP = ({ setData, data }: ChildProps) => {
-    const [isShow, setShow] = React.useState(null)
     const form = useForm({
         initialValues: {
             name: "",
@@ -28,18 +27,17 @@ const InputKTP = ({ setData, data }: ChildProps) => {
 
     function submitAndCheck() {
         // cek error
-        JSON.parse(localStorage.getItem("get") || "[]")
         if (Object.keys(form.errors).length === 0) {
             showNotification({
                 title: "Good Job!!",
                 message: "Submit successfully!!"
             })
         }
-    }
-    const handleSubmit = (value: any) =>{
-        let getData:any = [...data, value]
-        setData(getData)
 
+    }
+    const handleSubmit = (values: any) => {
+        let getData: any = [...data, values]
+        setData(getData)
     }
     return (
         <div className="wrapper">
@@ -78,7 +76,7 @@ const InputKTP = ({ setData, data }: ChildProps) => {
                         {...form.getInputProps('termsOfService', { type: 'checkbox' })}
                     />
                     <Group position="right" mt="md">
-                        <Button type="submit" variant="outline"
+                        <Button type="submit"
                             onClick={submitAndCheck}>Submit</Button>
                     </Group>
                 </form>

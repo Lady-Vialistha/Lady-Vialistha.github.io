@@ -8,6 +8,7 @@ import DoList from './Component/todoList';
 import { Routes, Route } from 'react-router-dom'
 import AppshellComponent from './Component/AppShell/appShell';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
+import AppShellDemo from './Component/AppShell/new';
 function App() {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
@@ -38,6 +39,7 @@ function App() {
           <NotificationsProvider>
             <Paper style={{ minHeight: "100vh" }}>
               <AppshellComponent />
+              {/* <AppShellDemo title={''} description={''} /> */}
             </Paper>
           </NotificationsProvider>
         </MantineProvider>

@@ -1,8 +1,40 @@
 .wrapper {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .sidebar {
     display: block
+}
+
+.mantine-7377r4 {
+    min-height: 100vh;
+}
+
+.mantine-3rguqu {
+    margin: auto;
+}
+
+.mantine-1jj4937 {
+    padding: 0;
+}
+
+.mantine-ncrsdl {
+    max-width: 35%;
+    width: 100%;
+}
+
+.mantine-1oy2cpa {
+    margin-top: 0;
+}
+
+header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mantine-1hpydqy {
+    margin: 0;
 }
