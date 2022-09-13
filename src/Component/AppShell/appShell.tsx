@@ -21,14 +21,9 @@ const AppshellComponent = () => {
     const location = useLocation()
     const [data, setData] = React.useState<any>([])
     const [archive, setArchive] = React.useState<any>([])
-    const [opened, setOpened] = React.useState(false);
-    const [openSidebar, setOpenSidebar] = React.useState<boolean>(false)
+    const [openSidebar, setOpenSidebar] = React.useState<boolean>(true)
+    const [openNavLink, setOpenNavLink] = React.useState(false)
     const theme = useMantineTheme();
-
-    const handleButtonHeader = () => {
-        setOpened(o => !o)
-        setOpenSidebar(i => !i)
-    }
 
     const useStyles = createStyles((theme) => ({
         wrapper: {
@@ -95,6 +90,37 @@ const AppshellComponent = () => {
             marginBottom: theme.spacing.xl,
         },
 
+        test: {
+            color: 'blue',
+            backgroundColor: 'dark',
+
+        },
+
+        button: {
+            color: theme.white,
+            backgroundColor: theme.colors.orange[6],
+            border: 0,
+            borderRadius: theme.radius.md,
+            padding: `${theme.spacing.sm}px ${theme.spacing.lg}px`,
+            cursor: 'pointer',
+            margin: theme.spacing.md,
+
+            // Use pseudo-classes just like you would in Sass
+            '&:hover': {
+                backgroundColor: theme.colors.blue[9],
+            },
+
+            '&:not(:first-of-type)': {
+                backgroundColor: theme.colors.violet[6],
+
+                // pseudo-classes can be nested
+                '&:hover': {
+                    backgroundColor: theme.colors.violet[9],
+                },
+            },
+        },
+
+
         link: {
             boxSizing: 'border-box',
             display: 'block',
@@ -125,24 +151,90 @@ const AppshellComponent = () => {
             },
         },
     }));
+    const { classes, cx } = useStyles();
+    const [active, setActive] = useState('Home');
 
     const mainLinksMockdata = [
         { icon: IconHome2, label: 'Home' },
     ];
-
-    const { classes, cx } = useStyles();
-    const [active, setActive] = useState('Home');
+    const handleNavLink = () => {
+        const minWidth = window.innerWidth;
+        if (minWidth > 280 && minWidth < 769) {
+            setOpenSidebar(!openSidebar)
+        }
+        else {
+            setOpenSidebar(true)
+        }
+    }
+    const handleSidebar = () => {
+        const minWidth = window.innerWidth;
+        if (minWidth > 280 && minWidth < 769) {
+            setOpenSidebar(!openSidebar)
+        } else {
+            setOpenSidebar(true)
+        }
+    }
 
     const mainLinks = mainLinksMockdata.map((link) => (
         <Tooltip label={link.label} position="right" withArrow transitionDuration={0} key={link.label}>
             <UnstyledButton
-                onClick={() => setActive(link.label)}
+                onClick={() => handleSidebar()}
                 className={cx(classes.mainLink, { [classes.mainLinkActive]: link.label === active })}
             >
                 <link.icon stroke={1.5} />
             </UnstyledButton>
         </Tooltip>
     ));
+    const handleWidth = () => {
+        const minWidth = window.innerWidth;
+        if (minWidth > 280 && minWidth < 769) {
+            return (
+                <Navbar height={750} width={{ sm: 300 }} style={{ background: openSidebar ? "white" : "transparent", borderRight: openSidebar ? "1px solid #e9ecef" : 0, width: openSidebar ? "100%" : 0 }} >
+                    <Navbar.Section grow className={classes.wrapper}>
+                        <div className={classes.aside}>
+                            {mainLinks}
+                        </div>
+                        {openSidebar && <div className={classes.main}>
+                            <Title order={4} className={classes.title}>
+                                {active}
+                            </Title>
+                            <div>
+                                <NavLink label="Input Data KTP" className={classes.test} component={Link} to="/" active={location.pathname === '/'} onClick={() => handleNavLink()} />
+                                <NavLink label="List Data KTP" component={Link} to="/list" active={location.pathname === '/list'} onClick={() => handleNavLink()} />
+                                <NavLink label="Arsip Data KTP" component={Link} to="/arsip" active={location.pathname === '/arsip'} onClick={() => handleNavLink()} />
+                                <button type="button" className={classes.button}>
+                                    First
+                                </button>
+                            </div>
+                        </div>}
+                    </Navbar.Section>
+                </Navbar>
+            )
+        }
+        else {
+            return (
+                <Navbar height={750} width={{ sm: 300 }} style={{ background: openSidebar ? "white" : "transparent", borderRight: openSidebar ? "1px solid #e9ecef" : 0, width: openSidebar ? "fit-content" : 0 }} >
+                    <Navbar.Section grow className={classes.wrapper}>
+                        <div className={classes.aside}>
+                            {mainLinks}
+                        </div>
+                        {openSidebar && <div className={classes.main}>
+                            <Title order={4} className={classes.title}>
+                                {active}
+                            </Title>
+                            <div>
+                                <NavLink label="Input Data KTP" component={Link} to="/" active={location.pathname === '/'} onClick={() => handleNavLink()} />
+                                <NavLink label="List Data KTP" component={Link} to="/list" active={location.pathname === '/list'} onClick={() => handleNavLink()} />
+                                <NavLink label="Arsip Data KTP" component={Link} to="/arsip" active={location.pathname === '/arsip'} onClick={() => handleNavLink()} />
+                            </div>
+                        </div>}
+                    </Navbar.Section>
+
+                </Navbar>
+            )
+        }
+    }
+
 
     return (
         <AppShell
@@ -155,33 +247,7 @@ const AppshellComponent = () => {
             asideOffsetBreakpoint="sm"
             padding="md"
             navbar={
-                <Navbar height={750} width={{ sm: 300 }}>
-                    <Navbar.Section grow className={classes.wrapper}>
-                        <div className={classes.aside}>
-                            <div className={classes.logo}>
-                                <Burger
-                                    opened={opened}
-                                    onClick={() => handleButtonHeader()}
-                                    size="sm"
-                                    color={theme.colors.gray[6]}
-                                    mr="xl"
-                                />
-                            </div>
-                            {mainLinks}
-                        </div>
-                        <div className={classes.main}>
-                            <Title order={4} className={classes.title}>
-                                {active}
-                            </Title>
-                            <div >
-                                <NavLink label="Input Data KTP" component={Link} to="/" active={location.pathname === '/'} />
-                                <NavLink label="List Data KTP" component={Link} to="/list" active={location.pathname === '/list'} />
-                                <NavLink label="Arsip Data KTP" component={Link} to="/arsip" active={location.pathname === '/arsip'} />
-                            </div>
-                        </div>
-                    </Navbar.Section>
-
-                </Navbar>
+                handleWidth()
             }
             header={
                 <Header height={70} p="md">
@@ -197,6 +263,7 @@ const AppshellComponent = () => {
                 <Route path="/list" element={<ListKTP setData={setData} archive={archive} setArchive={setArchive} data={data} />} />
                 <Route path="/arsip" element={<ArchiveKTP archive={archive} />} />
             </Routes>
+            <IconTheme />
 
         </AppShell>
     );

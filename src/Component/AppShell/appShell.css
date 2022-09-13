@@ -21,7 +21,6 @@
 }
 
 .mantine-ncrsdl {
-    max-width: 35%;
     width: 100%;
 }
 
@@ -36,5 +35,36 @@ header {
 }
 
 .mantine-1hpydqy {
-    margin: 0;
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+}
+
+.mantine-eolpbp {
+    margin-top: 11px;
+}
+
+.mantine-1wusqbv {
+    margin-top: 11px;
+}
+
+.mantine-ta0ll7 {
+    margin-bottom: 0;
+}
+
+@media(min-width: 280px) {
+    @media(max-width: 768px) {
+        .mantine-16pqg5q {
+            padding-left: 76px;
+        }
+        .mantine-xnet3h {
+            padding-left: 76px;
+        }
+        .mantine-ncrsdl {
+            max-width: fit-content;
+        }
+        .mantine-1untuka {
+            width: 100%;
+        }
+    }
 }

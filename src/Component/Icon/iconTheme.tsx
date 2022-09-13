@@ -22,6 +22,7 @@ function IconTheme() {
             paddingRight: 4,
             width: 136,
             height: 36,
+
         },
         iconWrapper: {
             height: 28,

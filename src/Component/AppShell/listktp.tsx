@@ -1,4 +1,4 @@
-import { Button, createStyles, ScrollArea, Text, UnstyledButton, Anchor, Card, SimpleGrid, Group, Grid } from '@mantine/core';
+import { Button, createStyles, ScrollArea, Text, UnstyledButton, Anchor, Card, SimpleGrid, Group, Grid, Paper } from '@mantine/core';
 import React, { Dispatch, SetStateAction } from 'react'
 interface ChildProps {
     data: any;
@@ -6,7 +6,7 @@ interface ChildProps {
     setData: React.Dispatch<React.SetStateAction<any>>;
     setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
-const ListKTP = ({ setData, setArchive, archive, data }: ChildProps) => {
+const ListKTP = ({ setData, setArchive, archive, data, }: ChildProps) => {
     const onArchive = (value: any) => {
         setData(data.filter((item: any) => item !== value))
         setArchive([...archive, value])
@@ -53,11 +53,10 @@ const ListKTP = ({ setData, setArchive, archive, data }: ChildProps) => {
     const { classes } = useStyles();
 
     const items = data.map((item: any, key: any) => (
-        <Grid.Col md={4} mt="md" >
-
-            <UnstyledButton key={key} className={classes.item}>
+        <Grid.Col md={4} mt="md" key={key}>
+            <Paper className={classes.item}>
                 <Text size="xs" mt={7}>
-                    {item.name}
+                    {item.user}
                 </Text>
                 <Text size="xs" mt={7}>
                     {item.email}
@@ -69,7 +68,7 @@ const ListKTP = ({ setData, setArchive, archive, data }: ChildProps) => {
                     {item.ktp}
                 </Text>
                 <Button className={classes.button} onClick={() => onArchive(item)}>Arsip</Button>
-            </UnstyledButton>
+            </Paper>
         </Grid.Col>
     ));
     return (
