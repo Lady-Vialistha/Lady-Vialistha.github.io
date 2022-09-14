@@ -259,9 +259,9 @@ const AppshellComponent = () => {
 
         >
             <Routes>
-                <Route path="/" element={<InputKTP setData={setData} data={data} />} />
+                <Route path="/" element={<InputKTP setData={setData} data={data} setArchive={setArchive} />} />
                 <Route path="/list" element={<ListKTP setData={setData} archive={archive} setArchive={setArchive} data={data} />} />
-                <Route path="/arsip" element={<ArchiveKTP archive={archive} />} />
+                <Route path="/arsip" element={<ArchiveKTP archive={archive} setArchive={setArchive} />} />
             </Routes>
             <IconTheme />
 

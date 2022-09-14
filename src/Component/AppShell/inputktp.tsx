@@ -2,25 +2,19 @@ import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import React from 'react';
-import {
-    collection,
-    addDoc,
-    onSnapshot,
-    getDocs,
-} from "firebase/firestore";
+import { collection, doc, setDoc, getDocs, onSnapshot, addDoc } from "@firebase/firestore";
 import db from "../Firebase/realtime-config.js"
 
 interface ChildProps {
     data: any,
     setData: React.Dispatch<React.SetStateAction<any>>;
+    setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
-const InputKTP = ({ setData, data }: ChildProps) => {
-    const [User, setUser] = React.useState("")
+const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
+    const [User, setUser] = React.useState<string>("")
     const [Email, setEmail] = React.useState("")
     const [Telp, setTelp] = React.useState("")
     const [Ktp, setKtp] = React.useState("")
-    const docRef = collection(db, "TheList");
-    const getRef: any = getDocs(docRef);
 
     const form = useForm({
         initialValues: {
@@ -46,47 +40,53 @@ const InputKTP = ({ setData, data }: ChildProps) => {
                 message: "Submit successfully!!"
             })
         }
-
     }
     React.useEffect(() => {
         onSnapshot(collection(db, "List"), (snapshot: any) => {
-            const items: any[] = [];
-            snapshot.docs.forEach((doc: any) => {
-                items.push({ ...doc.data(), user: doc.username, email: doc.email, telp: doc.telp, ktp: doc.ktp });
-                return { ...doc.data() };
-            });
-            return setData(items)
+            const items = snapshot.docs.map((doc: any) => ({
+                user: doc.user,
+                email: doc.email,
+                telp: doc.telp,
+                ktp: doc.ktp,
+                ...doc.data()
+            }));
+            return setData(items);
         })
     }, [])
-    const handleSubmit = () => {
-        if (getRef !== "") {
-            try {
-                addDoc(collection(db, "List"), {
-                    username: User,
-                    email: Email,
-                    telp: Telp,
-                    ktp: Ktp
-                })
-                return alert("success")
 
-            }
-            catch (e: any) {
-                return alert(e)
-            }
+    const docRef = collection(db, "List");
+    const getRef: any = getDocs(docRef);
+    const handleSubmit = (values: any) => {
+        if (getRef !== "") {
+            addDoc(collection(db, "List"), {
+                user: values.user,
+                email: values.email,
+                telp: values.telp,
+                ktp: values.ktp
+            })
+                .then(() => {
+                    setData([...data, values])
+                })
+                .catch((e: any) => {
+                    alert(e);
+                });
         } else {
-            alert("empty data")
+            alert("Empty data");
         }
     }
+
+
     return (
         <div className="wrapper">
             <Box sx={{ maxWidth: 300 }} mx="auto">
-                <form onSubmit={form.onSubmit(() => handleSubmit())}>
+                <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
                     <TextInput
                         withAsterisk
                         label="Username"
                         type="text"
                         placeholder="yourusername"
                         value={User}
+                        onChange={e => setUser(e.target.value)}
                         {...form.getInputProps("user")}
                     />
                     <TextInput
@@ -94,6 +94,7 @@ const InputKTP = ({ setData, data }: ChildProps) => {
                         label="Email"
                         placeholder="your@email.com"
                         value={Email}
+                        onChange={e => setEmail(e.target.value)}
                         {...form.getInputProps("email")}
                     />
                     <TextInput
@@ -102,6 +103,7 @@ const InputKTP = ({ setData, data }: ChildProps) => {
                         type="number"
                         placeholder="081290007685"
                         value={Telp}
+                        onChange={e => setTelp(e.target.value)}
                         {...form.getInputProps("telp")}
                     />
                     <TextInput
@@ -110,6 +112,7 @@ const InputKTP = ({ setData, data }: ChildProps) => {
                         type="number"
                         placeholder="3275059488300987"
                         value={Ktp}
+                        onChange={e => setKtp(e.target.value)}
                         {...form.getInputProps("ktp")}
                     />
                     <Checkbox

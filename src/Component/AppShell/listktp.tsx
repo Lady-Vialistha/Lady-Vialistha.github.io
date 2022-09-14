@@ -1,4 +1,5 @@
 import { Button, createStyles, ScrollArea, Text, UnstyledButton, Anchor, Card, SimpleGrid, Group, Grid, Paper } from '@mantine/core';
+import { onSnapshot, collection } from 'firebase/firestore';
 import React, { Dispatch, SetStateAction } from 'react'
 interface ChildProps {
     data: any;

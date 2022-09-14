@@ -28,7 +28,6 @@
         "dayjs": "^1.11.5",
         "embla-carousel-react": "^7.0.2",
         "firebase": "^9.9.4",
-        "firestore": "^1.1.6",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.3.0",

@@ -1,24 +1,14 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
-import {
-    getFirestore,
-    getDoc,
-    setDoc,
-    collection,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    deleteField,
-} from "https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore.js";
-import "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCOOOZqVwSSagQ2caUiwJoC4Raev1AXzhk",
-    authDomain: "todolist-141aa.firebaseapp.com",
-    databaseURL: "https://todolist-141aa-default-rtdb.firebaseio.com",
-    projectId: "todolist-141aa",
-    storageBucket: "todolist-141aa.appspot.com",
-    messagingSenderId: "239377588279",
-    appId: "1:239377588279:web:2f2def875dd202b1da9fb2",
+    apiKey: "AIzaSyAYILbRkKpWXKb69mKl1sqItXlXus6lFr8",
+    authDomain: "data-ktp.firebaseapp.com",
+    databaseURL: "https://data-ktp-default-rtdb.firebaseio.com",
+    projectId: "data-ktp",
+    storageBucket: "data-ktp.appspot.com",
+    messagingSenderId: "330285420251",
+    appId: "1:330285420251:web:abccd513e32af962c046fe"
 };
 
 // Initialize Firebase
