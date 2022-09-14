@@ -1,12 +1,14 @@
 import React from 'react'
 import { Table, ScrollArea, Text, createStyles, Button, Grid, Paper, Card } from '@mantine/core';
-import { onSnapshot, collection } from 'firebase/firestore';
+import { onSnapshot, collection, addDoc, getDocs } from 'firebase/firestore';
 import db from '../Firebase/realtime-config';
 interface ChildProps {
     archive: any;
     setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
 const ArchiveKTP = ({ archive, setArchive }: ChildProps) => {
+    const docRef = collection(db, "List");
+    const getRef: any = getDocs(docRef);
     const useStyles = createStyles((theme) => ({
         card: {
             backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],

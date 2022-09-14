@@ -1,6 +1,7 @@
 import { Button, createStyles, ScrollArea, Text, UnstyledButton, Anchor, Card, SimpleGrid, Group, Grid, Paper } from '@mantine/core';
-import { onSnapshot, collection } from 'firebase/firestore';
+import { onSnapshot, addDoc, getDocs } from 'firebase/firestore';
 import React, { Dispatch, SetStateAction } from 'react'
+import db from '../Firebase/realtime-config';
 interface ChildProps {
     data: any;
     archive: any;
@@ -8,9 +9,21 @@ interface ChildProps {
     setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
 const ListKTP = ({ setData, setArchive, archive, data, }: ChildProps) => {
-    const onArchive = (value: any) => {
-        setData(data.filter((item: any) => item !== value))
-        setArchive([...archive, value])
+
+    const onArchive = (values: any) => {
+
+        // cari di firebase, data dengan id item.id
+
+        // ubah item.status di firebase menjadi "archive"
+
+        // db.collection("List")
+        //     .doc(values.id)
+        //     .update({status: "archive"});
+
+
+        // setData(data.filter((item: any) => item !== values))
+        // setArchive(true)
+        // setArchive([...archive, values])
     }
     const useStyles = createStyles((theme) => ({
         card: {

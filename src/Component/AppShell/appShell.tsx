@@ -17,6 +17,8 @@ import IconTheme from '../Icon/iconTheme';
 import InputKTP from './inputktp';
 import ListKTP from './listktp';
 import ArchiveKTP from './archivektp';
+import { onSnapshot, collection } from 'firebase/firestore';
+import db from '../Firebase/realtime-config';
 const AppshellComponent = () => {
     const location = useLocation()
     const [data, setData] = React.useState<any>([])
@@ -25,6 +27,20 @@ const AppshellComponent = () => {
     const [openNavLink, setOpenNavLink] = React.useState(false)
     const theme = useMantineTheme();
 
+
+    React.useEffect(() => {
+        onSnapshot(collection(db, "List"), (snapshot: any) => {
+            const items = snapshot.docs.map((doc: any) => ({
+                user: doc.user,
+                email: doc.email,
+                telp: doc.telp,
+                ktp: doc.ktp,
+                arsip: doc.arsip,
+                ...doc.data()
+            }));
+            return setData(items);
+        })
+    }, [])
     const useStyles = createStyles((theme) => ({
         wrapper: {
             display: 'flex',
@@ -199,12 +215,9 @@ const AppshellComponent = () => {
                                 {active}
                             </Title>
                             <div>
-                                <NavLink label="Input Data KTP" className={classes.test} component={Link} to="/" active={location.pathname === '/'} onClick={() => handleNavLink()} />
+                                <NavLink label="Input Data KTP" component={Link} to="/" active={location.pathname === '/'} onClick={() => handleNavLink()} />
                                 <NavLink label="List Data KTP" component={Link} to="/list" active={location.pathname === '/list'} onClick={() => handleNavLink()} />
                                 <NavLink label="Arsip Data KTP" component={Link} to="/arsip" active={location.pathname === '/arsip'} onClick={() => handleNavLink()} />
-                                <button type="button" className={classes.button}>
-                                    First
-                                </button>
                             </div>
                         </div>}
                     </Navbar.Section>

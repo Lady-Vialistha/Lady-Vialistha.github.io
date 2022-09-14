@@ -11,10 +11,6 @@ interface ChildProps {
     setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
 const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
-    const [User, setUser] = React.useState<string>("")
-    const [Email, setEmail] = React.useState("")
-    const [Telp, setTelp] = React.useState("")
-    const [Ktp, setKtp] = React.useState("")
 
     const form = useForm({
         initialValues: {
@@ -41,18 +37,6 @@ const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
             })
         }
     }
-    React.useEffect(() => {
-        onSnapshot(collection(db, "List"), (snapshot: any) => {
-            const items = snapshot.docs.map((doc: any) => ({
-                user: doc.user,
-                email: doc.email,
-                telp: doc.telp,
-                ktp: doc.ktp,
-                ...doc.data()
-            }));
-            return setData(items);
-        })
-    }, [])
 
     const docRef = collection(db, "List");
     const getRef: any = getDocs(docRef);
@@ -62,7 +46,7 @@ const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
                 user: values.user,
                 email: values.email,
                 telp: values.telp,
-                ktp: values.ktp
+                ktp: values.ktp,
             })
                 .then(() => {
                     setData([...data, values])
@@ -85,16 +69,12 @@ const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
                         label="Username"
                         type="text"
                         placeholder="yourusername"
-                        value={User}
-                        onChange={e => setUser(e.target.value)}
                         {...form.getInputProps("user")}
                     />
                     <TextInput
                         withAsterisk
                         label="Email"
                         placeholder="your@email.com"
-                        value={Email}
-                        onChange={e => setEmail(e.target.value)}
                         {...form.getInputProps("email")}
                     />
                     <TextInput
@@ -102,8 +82,6 @@ const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
                         label="No. Phone"
                         type="number"
                         placeholder="081290007685"
-                        value={Telp}
-                        onChange={e => setTelp(e.target.value)}
                         {...form.getInputProps("telp")}
                     />
                     <TextInput
@@ -111,8 +89,6 @@ const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
                         label="No. KTP"
                         type="number"
                         placeholder="3275059488300987"
-                        value={Ktp}
-                        onChange={e => setKtp(e.target.value)}
                         {...form.getInputProps("ktp")}
                     />
                     <Checkbox
