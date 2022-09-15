@@ -7,10 +7,11 @@ import db from "../Firebase/realtime-config.js"
 
 interface ChildProps {
     data: any,
+    status: string,
     setData: React.Dispatch<React.SetStateAction<any>>;
     setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
-const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
+const InputKTP = ({ setData, data, setArchive, status }: ChildProps) => {
 
     const form = useForm({
         initialValues: {
@@ -47,6 +48,7 @@ const InputKTP = ({ setData, data, setArchive }: ChildProps) => {
                 email: values.email,
                 telp: values.telp,
                 ktp: values.ktp,
+                status: status
             })
                 .then(() => {
                     setData([...data, values])

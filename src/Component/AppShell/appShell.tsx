@@ -2,16 +2,7 @@ import React from 'react'
 import { AppShell, Navbar, Header, NavLink, useMantineTheme, Aside, Footer, MediaQuery, Text, Burger, createStyles, Tooltip, UnstyledButton, Title } from '@mantine/core';
 import { Link, Routes, Route, useLocation, } from 'react-router-dom';
 import { useState } from 'react';
-import { MantineLogo } from '@mantine/ds';
-import {
-    IconHome2,
-    IconGauge,
-    IconDeviceDesktopAnalytics,
-    IconFingerprint,
-    IconCalendarStats,
-    IconUser,
-    IconSettings,
-} from '@tabler/icons';
+import { IconHome2 } from '@tabler/icons';
 import "../AppShell/appShell.css"
 import IconTheme from '../Icon/iconTheme';
 import InputKTP from './inputktp';
@@ -23,10 +14,9 @@ const AppshellComponent = () => {
     const location = useLocation()
     const [data, setData] = React.useState<any>([])
     const [archive, setArchive] = React.useState<any>([])
+    const [status, setStatus] = React.useState("tidak arsip")
     const [openSidebar, setOpenSidebar] = React.useState<boolean>(true)
-    const [openNavLink, setOpenNavLink] = React.useState(false)
     const theme = useMantineTheme();
-
 
     React.useEffect(() => {
         onSnapshot(collection(db, "List"), (snapshot: any) => {
@@ -35,7 +25,7 @@ const AppshellComponent = () => {
                 email: doc.email,
                 telp: doc.telp,
                 ktp: doc.ktp,
-                arsip: doc.arsip,
+                status: doc.status,
                 ...doc.data()
             }));
             return setData(items);
@@ -272,9 +262,9 @@ const AppshellComponent = () => {
 
         >
             <Routes>
-                <Route path="/" element={<InputKTP setData={setData} data={data} setArchive={setArchive} />} />
-                <Route path="/list" element={<ListKTP setData={setData} archive={archive} setArchive={setArchive} data={data} />} />
-                <Route path="/arsip" element={<ArchiveKTP archive={archive} setArchive={setArchive} />} />
+                <Route path="/" element={<InputKTP setData={setData} data={data} setArchive={setArchive} status={status} />} />
+                <Route path="/list" element={<ListKTP setData={setData} archive={archive} setArchive={setArchive} data={data} status={status} setStatus={setStatus} />} />
+                <Route path="/arsip" element={<ArchiveKTP archive={archive} setArchive={setArchive} status={status} setStatus={setStatus} />} />
             </Routes>
             <IconTheme />
 

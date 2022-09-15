@@ -4,9 +4,11 @@ import { onSnapshot, collection, addDoc, getDocs } from 'firebase/firestore';
 import db from '../Firebase/realtime-config';
 interface ChildProps {
     archive: any;
+    status: string,
+    setStatus: React.Dispatch<React.SetStateAction<any>>;
     setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
-const ArchiveKTP = ({ archive, setArchive }: ChildProps) => {
+const ArchiveKTP = ({ archive, setArchive, status, setStatus }: ChildProps) => {
     const docRef = collection(db, "List");
     const getRef: any = getDocs(docRef);
     const useStyles = createStyles((theme) => ({

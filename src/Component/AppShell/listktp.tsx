@@ -1,30 +1,117 @@
 import { Button, createStyles, ScrollArea, Text, UnstyledButton, Anchor, Card, SimpleGrid, Group, Grid, Paper } from '@mantine/core';
-import { onSnapshot, addDoc, getDocs } from 'firebase/firestore';
+import { FirebaseError } from 'firebase/app';
+import { onSnapshot, addDoc, getDocs, Firestore, collection, doc, updateDoc, query, setDoc } from 'firebase/firestore';
+import { get } from 'http';
 import React, { Dispatch, SetStateAction } from 'react'
 import db from '../Firebase/realtime-config';
 interface ChildProps {
     data: any;
     archive: any;
+    status: string;
+    setStatus: React.Dispatch<React.SetStateAction<any>>;
     setData: React.Dispatch<React.SetStateAction<any>>;
     setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
-const ListKTP = ({ setData, setArchive, archive, data, }: ChildProps) => {
+const ListKTP = ({ setData, setArchive, archive, data, status, setStatus }: ChildProps) => {
+    const onArchive = async (values: any) => {
+        setArchive([...archive, values])
 
-    const onArchive = (values: any) => {
+        const docRef = doc(db, "List", values.user);
+        await setDoc(docRef, {
+            user: values.user,
+            email: values.email,
+            telp: values.telp,
+            ktp: values.ktp,
+            status: status
+        })
+            .then(() => {
+                return setData(data.filter((item: any) => item !== values))
 
-        // cari di firebase, data dengan id item.id
+            })
+            .catch((e: any) => {
+                console.log("error", e)
+            })
+        await updateDoc(docRef, {
+            status: "arsip"
+        })
+            .then(() => {
+                return console.log("done arsip")
+            })
+            .catch((e: any) => {
+                console.log("error arsip", e)
+            })
 
-        // ubah item.status di firebase menjadi "archive"
-
-        // db.collection("List")
-        //     .doc(values.id)
-        //     .update({status: "archive"});
 
 
-        // setData(data.filter((item: any) => item !== values))
-        // setArchive(true)
-        // setArchive([...archive, values])
+
+
+
+
+
+
+
+
+        // const q = query(collection(db, "List"));
+        // const querySnapshot = await getDocs(q);
+        // let docUser = "";
+        // querySnapshot.forEach(async (doc: any) => {
+        //     docUser = doc.user;
+        //     const user = doc(db, "List", docUser);
+        //     await updateDoc(user, {
+        //         status: "arsip"
+        //     })
+        // });
+
+
+
+
+
+        // var ref = doc(db, "List", values.user);
+        // const docRef = collection(db, "List", values.user);
+        // const getRef: any = getDocs(docRef);
+        // updateDoc(ref, {
+        //     user: values.user,
+        //     email: values.email,
+        //     telp: values.telp,
+        //     ktp: values.ktp,
+        //     status: status
+        // })
+        //     .then(() => {
+        //         setArchive([...archive, values])
+        //     })
+        //     .catch((e: any) => {
+        //         alert(e);
+        //     });
+
+
+
+
+
+        // var ref = doc(db, "TheList", inputId.value);
+        // await updateDoc(ref, {
+        //     nameOfName: inputName.value,
+        //     nameOfID: inputId.value,
+        // })
+        //     .then(() => {
+        //         alert("berhasil");
+        //         inputId.value = "";
+        //         inputName.value = "";
+        //     })
+        //     .catch((error) => {
+        //         alert("error" + error);
+        //     });
+        //     setData(data.filter((item: any) => item !== values))
+        //     setArchive([...archive, values])
     }
+
+    // cari di firebase, data dengan id item.id
+    // ubah item.status di firebase menjadi "archive"
+    // db.collection("List")
+    //     .doc(values.id)
+    //     .update({ status: "archive" });
+
+
+
     const useStyles = createStyles((theme) => ({
         card: {
             backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[2],
@@ -96,3 +183,11 @@ const ListKTP = ({ setData, setArchive, archive, data, }: ChildProps) => {
     )
 }
 export default ListKTP;
+
+function ref(db: Firestore) {
+    throw new Error('Function not implemented.');
+}
+function child(dbRef: void, arg1: string): string | import("http").RequestOptions | import("url").URL {
+    throw new Error('Function not implemented.');
+}
+
