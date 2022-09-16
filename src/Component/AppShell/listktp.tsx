@@ -14,10 +14,10 @@ interface ChildProps {
 }
 const ListKTP = ({ setData, setArchive, archive, data, status, setStatus }: ChildProps) => {
     const onArchive = async (values: any) => {
+        setData((item: any) => item !== values)
         setArchive([...archive, values])
-
         const docRef = doc(db, "List", values.user);
-        await setDoc(docRef, {
+        await setDoc(doc(db, "List"), {
             user: values.user,
             email: values.email,
             telp: values.telp,
@@ -25,8 +25,7 @@ const ListKTP = ({ setData, setArchive, archive, data, status, setStatus }: Chil
             status: status
         })
             .then(() => {
-                return setData(data.filter((item: any) => item !== values))
-
+                return console.log("berhasil")
             })
             .catch((e: any) => {
                 console.log("error", e)
@@ -35,19 +34,11 @@ const ListKTP = ({ setData, setArchive, archive, data, status, setStatus }: Chil
             status: "arsip"
         })
             .then(() => {
-                return console.log("done arsip")
+                return setStatus(status)
             })
             .catch((e: any) => {
                 console.log("error arsip", e)
             })
-
-
-
-
-
-
-
-
 
 
 
