@@ -8,10 +8,10 @@ import db from "../Firebase/realtime-config.js"
 interface ChildProps {
     data: any,
     status: string,
-    setData: React.Dispatch<React.SetStateAction<any>>;
+    // setData: React.Dispatch<React.SetStateAction<any>>;
     setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
-const InputKTP = ({ setData, data, setArchive, status }: ChildProps) => {
+const InputKTP = ({ data, setArchive, status }: ChildProps) => {
 
     const form = useForm({
         initialValues: {
@@ -29,19 +29,36 @@ const InputKTP = ({ setData, data, setArchive, status }: ChildProps) => {
             termsOfService: (value: any) => value ? null : "Harus dicentang"
         },
     });
+
+    interface FormData {
+        user: string,
+        email: string,
+        telp: string,
+        ktp: string,
+        termsOfService: boolean
+    }
+
     function submitAndCheck() {
         // cek error
-        if (Object.keys(form.errors).length === 0) {
+        if (form.isValid()) {
             showNotification({
                 title: "Good Job!!",
                 message: "Submit successfully!!"
             })
         }
+        // if (Object.keys(form.errors).length === 0) {
+        //     showNotification({
+        //         title: "Good Job!!",
+        //         message: "Submit successfully!!"
+        //     })
+        // }
     }
 
     const docRef = collection(db, "List");
     const getRef: any = getDocs(docRef);
-    const handleSubmit = (values: any) => {
+
+    const handleSubmit = (values: FormData) => {
+
         if (getRef !== "") {
             addDoc(collection(db, "List"), {
                 user: values.user,
@@ -51,7 +68,7 @@ const InputKTP = ({ setData, data, setArchive, status }: ChildProps) => {
                 status: status
             })
                 .then(() => {
-                    setData([...data, values])
+                    // setData([...data, values])
                 })
                 .catch((e: any) => {
                     alert(e);

@@ -1,6 +1,6 @@
 import { Button, createStyles, ScrollArea, Text, UnstyledButton, Anchor, Card, SimpleGrid, Group, Grid, Paper } from '@mantine/core';
 import { FirebaseError } from 'firebase/app';
-import { onSnapshot, addDoc, getDocs, Firestore, collection, doc, updateDoc, query, setDoc } from 'firebase/firestore';
+import { onSnapshot, addDoc, getDocs, Firestore, collection, doc, updateDoc, query, setDoc, snapshotEqual, getDoc } from 'firebase/firestore';
 import { get } from 'http';
 import React, { Dispatch, SetStateAction } from 'react'
 import db from '../Firebase/realtime-config';
@@ -8,33 +8,36 @@ interface ChildProps {
     data: any;
     archive: any;
     status: string;
-    setStatus: React.Dispatch<React.SetStateAction<any>>;
-    setData: React.Dispatch<React.SetStateAction<any>>;
-    setArchive: React.Dispatch<React.SetStateAction<any>>;
+    // setStatus: React.Dispatch<React.SetStateAction<any>>;
+    // setData: React.Dispatch<React.SetStateAction<any>>;
+    // setArchive: React.Dispatch<React.SetStateAction<any>>;
 }
-const ListKTP = ({ setData, setArchive, archive, data, status, setStatus }: ChildProps) => {
+const ListKTP = ({ archive, data, status }: ChildProps) => {
     const onArchive = async (values: any) => {
-        setData((item: any) => item !== values)
-        setArchive([...archive, values])
-        const docRef = doc(db, "List", values.user);
-        await setDoc(doc(db, "List"), {
-            user: values.user,
-            email: values.email,
-            telp: values.telp,
-            ktp: values.ktp,
-            status: status
-        })
-            .then(() => {
-                return console.log("berhasil")
-            })
-            .catch((e: any) => {
-                console.log("error", e)
-            })
+        // setData(data.filter((item: any) => item !== values))
+        // setArchive([...archive, values])
+        const docRef = doc(db, "List", values.id);
+
+        // await setDoc(doc(db, "List", values.id), {
+        //     user: values.user,
+        //     email: values.email,
+        //     telp: values.telp,
+        //     ktp: values.ktp,
+        //     status: status
+        // })
+        //     .then(() => {
+        //         return console.log("berhasil")
+        //     })
+        //     .catch((e: any) => {
+        //         console.log("error", e)
+        //     })
+
+
         await updateDoc(docRef, {
             status: "arsip"
         })
             .then(() => {
-                return setStatus(status)
+                console.log("berhasil")
             })
             .catch((e: any) => {
                 console.log("error arsip", e)
@@ -58,14 +61,10 @@ const ListKTP = ({ setData, setArchive, archive, data, status, setStatus }: Chil
 
 
         // var ref = doc(db, "List", values.user);
-        // const docRef = collection(db, "List", values.user);
+        // const docRef = collection(db, "List", values.id);
         // const getRef: any = getDocs(docRef);
         // updateDoc(ref, {
-        //     user: values.user,
-        //     email: values.email,
-        //     telp: values.telp,
-        //     ktp: values.ktp,
-        //     status: status
+        //     status: "arsip"
         // })
         //     .then(() => {
         //         setArchive([...archive, values])
@@ -73,26 +72,6 @@ const ListKTP = ({ setData, setArchive, archive, data, status, setStatus }: Chil
         //     .catch((e: any) => {
         //         alert(e);
         //     });
-
-
-
-
-
-        // var ref = doc(db, "TheList", inputId.value);
-        // await updateDoc(ref, {
-        //     nameOfName: inputName.value,
-        //     nameOfID: inputId.value,
-        // })
-        //     .then(() => {
-        //         alert("berhasil");
-        //         inputId.value = "";
-        //         inputName.value = "";
-        //     })
-        //     .catch((error) => {
-        //         alert("error" + error);
-        //     });
-        //     setData(data.filter((item: any) => item !== values))
-        //     setArchive([...archive, values])
     }
 
     // cari di firebase, data dengan id item.id
