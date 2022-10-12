@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.1d1a1ed4.css",
-    "main.js": "/static/js/main.6395683e.js",
-    "static/js/787.5e15adf4.chunk.js": "/static/js/787.5e15adf4.chunk.js",
-    "index.html": "/index.html",
-    "main.1d1a1ed4.css.map": "/static/css/main.1d1a1ed4.css.map",
-    "main.6395683e.js.map": "/static/js/main.6395683e.js.map",
-    "787.5e15adf4.chunk.js.map": "/static/js/787.5e15adf4.chunk.js.map"
+    "main.css": "/my-mantine-app/static/css/main.1d1a1ed4.css",
+    "main.js": "/my-mantine-app/static/js/main.95a44368.js",
+    "static/js/787.5e15adf4.chunk.js": "/my-mantine-app/static/js/787.5e15adf4.chunk.js",
+    "index.html": "/my-mantine-app/index.html",
+    "main.1d1a1ed4.css.map": "/my-mantine-app/static/css/main.1d1a1ed4.css.map",
+    "main.95a44368.js.map": "/my-mantine-app/static/js/main.95a44368.js.map",
+    "787.5e15adf4.chunk.js.map": "/my-mantine-app/static/js/787.5e15adf4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1d1a1ed4.css",
-    "static/js/main.6395683e.js"
+    "static/js/main.95a44368.js"
   ]
 }
