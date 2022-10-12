@@ -2,7 +2,7 @@
     "name": "my-mantine-app",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://Lady-Vialistha.github.io",
+    "homepage": "https://Lady-Vialistha.github.io/my-mantine-app",
     "dependencies": {
         "-": "0.0.1",
         "@emotion/react": "^11.10.4",
